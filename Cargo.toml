@@ -1,0 +1,10 @@
+[package]
+name = "fancy_clocks"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+chrono = "0.4.22"
+plotters = { version = "0.3.4", default-features = false, features = ["svg_backend", "chrono", "ttf", "image", "deprecated_items", "all_series", "all_elements", "full_palette"]}
