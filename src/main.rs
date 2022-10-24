@@ -1,3 +1,5 @@
+mod numerals;
+
 fn main() {
-    println!("Hello, world!");
+    println!("Hello, world! {}", numerals::cistercian::TEST);
 }
