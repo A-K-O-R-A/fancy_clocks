@@ -1,4 +1,6 @@
-use plotters::prelude::*;
+use plotters::{prelude::*, style::full_palette::PINK};
+
+const COLOR: &RGBColor = &PINK;
 
 use super::lib;
 
@@ -89,7 +91,7 @@ impl Digit {
                 .draw_line(
                     (0, 0).scale(scale.0, scale.1).offset(offset),
                     (1, 1).scale(scale.0, scale.1).offset(offset),
-                    &RED,
+                    COLOR,
                 )
                 .expect("Lol");
             return;
@@ -141,7 +143,7 @@ impl Digit {
                 .draw_line(
                     l.from.scale(scale.0, scale.1).offset(offset),
                     l.to.scale(scale.0, scale.1).offset(offset),
-                    &RED,
+                    COLOR,
                 )
                 .expect("Lol");
         }
@@ -186,7 +188,7 @@ impl lib::Numeral for Cistercian {
 
     fn draw(&self) {
         let mut backend = SVGBackend::new("a.svg", (200, 400));
-        backend.draw_line((100, 100), (100, 300), &RED).expect("a");
+        backend.draw_line((100, 100), (100, 300), &PINK).expect("a");
         self.unum.draw(&mut backend, 50, (100, 100));
         self.decem.draw(&mut backend, 50, (100, 100));
         self.centum.draw(&mut backend, 50, (100, 300));
