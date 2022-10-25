@@ -1,5 +1,8 @@
 mod numerals;
+use numerals::lib::Numeral;
 
 fn main() {
-    println!("Hello, world! {}", numerals::cistercian::TEST);
+    let a = numerals::Cistercian::from_number(10);
+    println!("Hello, world! {:?}", a);
+    a.draw();
 }

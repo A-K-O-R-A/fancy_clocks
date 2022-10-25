@@ -1,1 +1,4 @@
-pub const UWU: u8 = 2;
+pub trait Numeral {
+    fn from_number(n: usize) -> Self;
+    fn draw(&self);
+}
