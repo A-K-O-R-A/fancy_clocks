@@ -57,13 +57,14 @@ enum DigitType {
 }
 
 impl DigitType {
-    ///For drawing only
+    ///For flipping the lines according to their position
+    /// (1,1) is top right
     const fn scaling(&self) -> Cords {
         match self {
-            DigitType::UNUM => (1, 1),
-            DigitType::DECEM => (-1, 1),
-            DigitType::CENTUM => (1, -1),
-            DigitType::MILLE => (-1, -1),
+            DigitType::UNUM => (1, 1),    //Top right
+            DigitType::DECEM => (-1, 1),  //Top left
+            DigitType::CENTUM => (1, -1), //Bottom right
+            DigitType::MILLE => (-1, -1), //Bottom left
         }
     }
 }
@@ -71,7 +72,7 @@ impl DigitType {
 #[derive(Debug)]
 struct Digit {
     digit_type: DigitType,
-    ///Digit value between 0 an 10
+    ///Digit value between 0 and 9
     value: u8,
 }
 
@@ -105,8 +106,9 @@ impl Digit {
             return Ok(());
         }
 
+        //Draw line with biggest possible value until the combined value of the drawn lines equals val
         while val > 0 {
-            let l = match val {
+            let line = match val {
                 6..=9 => {
                     val -= 6;
                     Line::from_to((1, 0), (1, 1))
@@ -129,11 +131,11 @@ impl Digit {
                     val -= 1;
                     Line::from_to((0, 0), (1, 0))
                 }
-                _ => todo!("This shouldn't happen"),
+                _ => panic!("{} is not represantable by this system", val),
             };
             backend.draw_line(
-                l.from.scale(scale.0, scale.1).offset(offset),
-                l.to.scale(scale.0, scale.1).offset(offset),
+                line.from.scale(scale.0, scale.1).offset(offset),
+                line.to.scale(scale.0, scale.1).offset(offset),
                 COLOR,
             )?;
         }
