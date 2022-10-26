@@ -4,14 +4,6 @@ use plotters::style::text_anchor::{HPos, Pos, VPos};
 mod pattern;
 use pattern::*;
 
-/*
-const COLOR: &RGBColor = &WHITE;
-const STROKE_WIDTH: u32 = 3;
-fn color() -> ShapeStyle {
-    COLOR.stroke_width(STROKE_WIDTH)
-}
-*/
-
 #[derive(Debug)]
 pub struct Braille {
     patterns: [Pattern; 4],
@@ -33,7 +25,7 @@ impl super::Numeral for Braille {
     fn draw(&self) -> Result<(), Box<dyn std::error::Error>> {
         let _scale = 50;
 
-        let mut backend = SVGBackend::new("out/roman.svg", (200, 100));
+        let mut backend = SVGBackend::new("out/braille.svg", (200, 100));
 
         //Join patterns to single string
         let text = (&self.patterns)
@@ -42,14 +34,13 @@ impl super::Numeral for Braille {
             .reduce(|a, b| a + &b)
             .expect("Couldn't convert pattern to string");
 
-        println!("{text}");
         let pos = Pos::new(HPos::Center, VPos::Center);
         backend.draw_text(
             &text,
-            &TextStyle::from(("sans-serif", 30).into_font())
+            &TextStyle::from(("sans-serif", 60).into_font())
                 .color(&WHITE)
                 .pos(pos),
-            (100, 50),
+            (100, 60),
         )?;
 
         Ok(())

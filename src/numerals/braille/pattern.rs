@@ -7,11 +7,10 @@
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub struct Pattern(pub &'static str);
 
-const X: bool = true;
-const O: bool = false;
-
 ///Source: https://nfb.org/images/nfb/images/braillereadingpals/braille_numbers_graphic.jpg
 
+#[allow(dead_code)]
+//In future this character could be added infront of all patterns to indicate they're numbers
 pub const NUMBER_SIGN: Pattern = Pattern("⠼");
 pub const ZERO: Pattern = Pattern("⠚");
 pub const ONE: Pattern = Pattern("⠁");
@@ -29,6 +28,7 @@ pub trait IntoPattern {
 }
 
 impl IntoPattern for usize {
+    ///Converts the number to the equivalent braille pattern
     fn into_pattern(&self) -> Pattern {
         match self {
             0 => ZERO,
