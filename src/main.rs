@@ -3,14 +3,17 @@ use chrono::prelude::*;
 use numerals::Numeral;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let n = get_time_as_number();
+    let n = get_time_as_number() as usize;
     println!("Current time {}", n);
 
-    let cistercian = numerals::Cistercian::from_number(n as usize);
+    let cistercian = numerals::Cistercian::from_number(n);
     cistercian.draw()?;
 
-    let roman = numerals::Roman::from_number(n as usize);
+    let roman = numerals::Roman::from_number(n);
     roman.draw()?;
+
+    let braille = numerals::Braille::from_number(n);
+    braille.draw()?;
 
     Ok(())
 }
