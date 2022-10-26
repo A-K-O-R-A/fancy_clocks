@@ -1,4 +1,4 @@
-use plotters::{prelude::*, style::full_palette::PINK};
+use plotters::prelude::*;
 
 //Import util stuff
 mod util;
