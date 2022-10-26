@@ -2,8 +2,6 @@ use plotters::{prelude::*, style::full_palette::PINK};
 
 const COLOR: &RGBColor = &PINK;
 
-use super::lib;
-
 type Cords = (i32, i32);
 trait Scaleable {
     fn scale(&self, x_scale: i32, y_scale: i32) -> Self;
@@ -151,7 +149,7 @@ pub struct Cistercian {
     mille: Digit,
 }
 
-impl lib::Numeral for Cistercian {
+impl super::Numeral for Cistercian {
     fn from_number(n: usize) -> Self {
         let d4 = n % 10;
         let d3 = (n % 100) / 10;

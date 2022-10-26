@@ -1,6 +1,6 @@
 mod numerals;
 use chrono::prelude::*;
-use numerals::lib::Numeral;
+use numerals::Numeral;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let n = get_time_as_number();
