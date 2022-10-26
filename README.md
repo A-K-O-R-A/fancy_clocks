@@ -13,3 +13,7 @@ The cistercian clock at the time 13:31
 The roman clock at the time 14:44
 
 ![Roman](examples/roman_1444.svg)
+
+The braille clock at the time 15:28
+
+![Braille](examples/braille_1528.svg)
