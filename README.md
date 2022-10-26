@@ -6,6 +6,10 @@ reddit post.
 
 # Examples
 
-The clock at the time 13:31
+The cistercian clock at the time 13:31
 
-![Pimmel](examples/cistercian_1331.svg)
+![Cistercian](examples/cistercian_1331.svg)
+
+The roman clock at the time 14:44
+
+![Roman](examples/roman_1444.svg)

@@ -5,8 +5,14 @@ use numerals::Numeral;
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let n = get_time_as_number();
     println!("Current time {}", n);
-    let num = numerals::Cistercian::from_number(n as usize);
-    num.draw()
+
+    let cistercian = numerals::Cistercian::from_number(n as usize);
+    cistercian.draw()?;
+
+    let roman = numerals::Roman::from_number(n as usize);
+    roman.draw()?;
+
+    Ok(())
 }
 
 fn get_time_as_number() -> u32 {
