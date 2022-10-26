@@ -147,7 +147,6 @@ pub struct Cistercian {
     decem: Digit,
     centum: Digit,
     mille: Digit,
-    value: usize,
 }
 
 impl lib::Numeral for Cistercian {
@@ -173,19 +172,21 @@ impl lib::Numeral for Cistercian {
                 digit_type: DigitType::MILLE,
                 value: d1 as u8,
             },
-            value: n,
         }
     }
 
     fn draw(&self) -> Result<(), Box<dyn std::error::Error>> {
-        let path = format!("cistercian_{}.svg", self.value);
-        let mut backend = SVGBackend::new(&path, (200, 400));
-        backend.draw_line((100, 100), (100, 300), &PINK)?;
-        self.unum.draw(&mut backend, 50, (100, 100))?;
-        self.decem.draw(&mut backend, 50, (100, 100))?;
-        self.centum.draw(&mut backend, 50, (100, 300))?;
-        self.mille.draw(&mut backend, 50, (100, 300))?;
-        println!("My value is {}", self.value);
+        let scale = 50;
+
+        let mut backend = SVGBackend::new("cistercian.svg", (200, 300));
+
+        backend.draw_line((100, 50), (100, 250), &PINK)?;
+
+        self.unum.draw(&mut backend, scale, (100, 50))?;
+        self.decem.draw(&mut backend, scale, (100, 50))?;
+        self.centum.draw(&mut backend, scale, (100, 250))?;
+        self.mille.draw(&mut backend, scale, (100, 250))?;
+
         Ok(())
     }
 }
