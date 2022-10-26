@@ -6,6 +6,6 @@ reddit post.
 
 # Examples
 
-The clock at the time 12:52
+The clock at the time 13:31
 
-![Pimmel](examples/cistercian_1252.svg)
+![Pimmel](examples/cistercian_1331.svg)
