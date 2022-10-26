@@ -82,7 +82,6 @@ impl super::Numeral for Roman {
 
         let mut backend = SVGBackend::new("out/roman.svg", (200, 100));
         let text = digits_to_text(&self.digits);
-        println!("{text}");
         let pos = Pos::new(HPos::Center, VPos::Center);
         backend.draw_text(
             &text,
