@@ -22,6 +22,11 @@ struct Line {
     from: Cords,
     to: Cords,
 }
+impl Line {
+    fn from_to(from: Cords, to: Cords) -> Self {
+        Self { from, to }
+    }
+}
 impl Scaleable for Line {
     fn scale(&self, x_scale: i32, y_scale: i32) -> Line {
         Line {
@@ -80,73 +85,59 @@ struct Digit {
 
 */
 impl Digit {
-    fn draw(&self, backend: &mut SVGBackend, scale: i32, offset: Cords) {
+    fn draw(
+        &self,
+        backend: &mut SVGBackend,
+        scale: i32,
+        offset: Cords,
+    ) -> Result<(), Box<dyn std::error::Error>> {
         let scale = self.digit_type.scaling().scale(scale, scale);
 
-        // TODO Move draw_line() call out of match block
         let mut val = self.value.clone();
 
+        //For some reason the number 3 isn't represented as a 2 and 1 combined
         if val == 3 {
-            backend
-                .draw_line(
-                    (0, 0).scale(scale.0, scale.1).offset(offset),
-                    (1, 1).scale(scale.0, scale.1).offset(offset),
-                    COLOR,
-                )
-                .expect("Lol");
-            return;
+            backend.draw_line(
+                (0, 0).scale(scale.0, scale.1).offset(offset),
+                (1, 1).scale(scale.0, scale.1).offset(offset),
+                COLOR,
+            )?;
+            return Ok(());
         }
 
         while val > 0 {
             let l = match val {
                 6..=9 => {
                     val -= 6;
-                    Line {
-                        from: (1, 0),
-                        to: (1, 1),
-                    }
+                    Line::from_to((1, 0), (1, 1))
                 }
                 4..=5 => {
                     val -= 4;
-                    Line {
-                        from: (0, 1),
-                        to: (1, 0),
-                    }
+                    Line::from_to((0, 1), (1, 0))
                 }
                 /*
                 3 => {
                     val -= 3;
-                    backend.draw_line(
-                        (0, 0).scale(scale.0, scale.1).offset(offset),
-                        (1, 1).scale(scale.0, scale.1).offset(offset),
-                        &RED,
-                    )
+                    Line::from_to((0, 0), (1, 1))
                 }
                  */
                 2..=3 => {
                     val -= 2;
-                    Line {
-                        from: (0, 1),
-                        to: (1, 1),
-                    }
+                    Line::from_to((0, 1), (1, 1))
                 }
                 1 => {
                     val -= 1;
-                    Line {
-                        from: (0, 0),
-                        to: (1, 0),
-                    }
+                    Line::from_to((0, 0), (1, 0))
                 }
                 _ => todo!("This shouldn't happen"),
             };
-            backend
-                .draw_line(
-                    l.from.scale(scale.0, scale.1).offset(offset),
-                    l.to.scale(scale.0, scale.1).offset(offset),
-                    COLOR,
-                )
-                .expect("Lol");
+            backend.draw_line(
+                l.from.scale(scale.0, scale.1).offset(offset),
+                l.to.scale(scale.0, scale.1).offset(offset),
+                COLOR,
+            )?;
         }
+        Ok(())
     }
 }
 
@@ -186,13 +177,15 @@ impl lib::Numeral for Cistercian {
         }
     }
 
-    fn draw(&self) {
-        let mut backend = SVGBackend::new("a.svg", (200, 400));
-        backend.draw_line((100, 100), (100, 300), &PINK).expect("a");
-        self.unum.draw(&mut backend, 50, (100, 100));
-        self.decem.draw(&mut backend, 50, (100, 100));
-        self.centum.draw(&mut backend, 50, (100, 300));
-        self.mille.draw(&mut backend, 50, (100, 300));
+    fn draw(&self) -> Result<(), Box<dyn std::error::Error>> {
+        let path = format!("cistercian_{}.svg", self.value);
+        let mut backend = SVGBackend::new(&path, (200, 400));
+        backend.draw_line((100, 100), (100, 300), &PINK)?;
+        self.unum.draw(&mut backend, 50, (100, 100))?;
+        self.decem.draw(&mut backend, 50, (100, 100))?;
+        self.centum.draw(&mut backend, 50, (100, 300))?;
+        self.mille.draw(&mut backend, 50, (100, 300))?;
         println!("My value is {}", self.value);
+        Ok(())
     }
 }
