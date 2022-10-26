@@ -178,7 +178,7 @@ impl lib::Numeral for Cistercian {
     fn draw(&self) -> Result<(), Box<dyn std::error::Error>> {
         let scale = 50;
 
-        let mut backend = SVGBackend::new("cistercian.svg", (200, 300));
+        let mut backend = SVGBackend::new("out/cistercian.svg", (200, 300));
 
         backend.draw_line((100, 50), (100, 250), &PINK)?;
 
