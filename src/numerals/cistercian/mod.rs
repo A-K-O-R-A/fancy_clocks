@@ -4,7 +4,11 @@ use plotters::{prelude::*, style::full_palette::PINK};
 mod util;
 use util::*;
 
-const COLOR: &RGBColor = &PINK;
+const COLOR: &RGBColor = &WHITE;
+const STROKE_WIDTH: u32 = 3;
+fn color() -> ShapeStyle {
+    COLOR.stroke_width(STROKE_WIDTH)
+}
 
 /*
 DECEM | UNUM
@@ -64,7 +68,7 @@ impl Digit {
             backend.draw_line(
                 (0, 0).scale(scale.0, scale.1).offset(offset),
                 (1, 1).scale(scale.0, scale.1).offset(offset),
-                COLOR,
+                &color(),
             )?;
             return Ok(());
         }
@@ -99,7 +103,7 @@ impl Digit {
             backend.draw_line(
                 line.from.scale(scale.0, scale.1).offset(offset),
                 line.to.scale(scale.0, scale.1).offset(offset),
-                COLOR,
+                &color(),
             )?;
         }
         Ok(())
@@ -145,7 +149,7 @@ impl super::Numeral for Cistercian {
 
         let mut backend = SVGBackend::new("out/cistercian.svg", (200, 300));
 
-        backend.draw_line((100, 50), (100, 250), &PINK)?;
+        backend.draw_line((100, 50), (100, 250), &color())?;
 
         self.unum.draw(&mut backend, scale, (100, 50))?;
         self.decem.draw(&mut backend, scale, (100, 50))?;
